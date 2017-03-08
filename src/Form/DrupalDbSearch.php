@@ -36,21 +36,16 @@ class DrupalDbSearch extends FormBase
     {
         $form['#tree'] = TRUE;
 
-        $form['User'] = [
-            '#type' => 'fieldset',
-            '#title' => $this->t('User'),
-        ];
-
-        $form['User']['FirstName'] = [
+        $form['table'] = [
             '#type' => 'textfield',
-            '#title' => $this->t('First Name'),
+            '#title' => $this->t('Table Name'),
             '#description' => $this->t(''),
             '#required' => TRUE,
         ];
 
-        $form['User']['LastName'] = [
+        $form['column'] = [
             '#type' => 'textfield',
-            '#title' => $this->t('Last Name'),
+            '#title' => $this->t('Column Name'),
             '#description' => $this->t(''),
             '#required' => TRUE,
         ];
@@ -83,7 +78,7 @@ class DrupalDbSearch extends FormBase
      */
     public function getFormId()
     {
-        return 'simpleForm_simple_form';
+        return 'dbSearchForm';
     }
 
 
@@ -100,11 +95,12 @@ class DrupalDbSearch extends FormBase
      */
     public function validateForm(array &$form, FormStateInterface $form_state)
     {
-        $title = $form_state->getValue('title');
-        if (strlen($title) < 0) {
-            // Set an error for the form element with a key of "title".
-            $form_state->setErrorByName('title', $this->t('The title must be at least 5 characters long.'));
-        }
+        $a=1;
+//        $title = $form_state->getValue('title');
+//        if (strlen($title) < 0) {
+//            // Set an error for the form element with a key of "title".
+//            $form_state->setErrorByName('title', $this->t('The title must be at least 5 characters long.'));
+//        }
     }
 
     /**
@@ -119,21 +115,14 @@ class DrupalDbSearch extends FormBase
      */
     public function submitForm(array &$form, FormStateInterface $form_state)
     {
-        /*
-         * This would normally be replaced by code that actually does something
-         * with the title.
-         */
+        session_unset(); // Clear Session Array
         $title = $form_state->getValue('title');
         $values = $form_state->getValues();
+        $_SESSION['DrupalDbSearch']['FormValues'] = $values;
 
         ksm($form_state); //????
-        $_SESSION['mjs'] = $form_state;
-//       $url = Url::fromRoute('simpleForm.description'); // generate a url for route
-//        $url = Url::fromRoute('simpleForm.basicPageRedirect'); // generate a url for route
-        $url = Url::fromRoute('simpleForm.displayTable'); // generate a url for route
 
-
-
+        $url = Url::fromRoute('drupal_db_search.displayDbTableValues'); // generate a url for route
         $form_state->setRedirectUrl($url);
     }
 

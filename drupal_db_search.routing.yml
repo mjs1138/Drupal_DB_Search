@@ -17,3 +17,12 @@ drupal_db_search.table_column_form:
     _title: 'mjs1138 Drupal DB Table Search'
   requirements:
     _permission: 'access content'
+
+
+drupal_db_search.displayDbTableValues:
+  path: 'mjs1138/drupal_db_search/displayDbTableValues'
+  defaults:
+    _controller:  '\Drupal\drupal_db_search\Controller\DisplayDBTableColumnValues::displayDbTableColumnValues' # points to class::method to call
+    _title: 'mjs1138 Form API Example - Display DB Table Column Values'
+  requirements:
+    _permission: 'access content'
