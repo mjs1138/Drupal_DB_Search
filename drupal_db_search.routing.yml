@@ -1,0 +1,19 @@
+# This routing.yml file makes both the simple example description page and the
+# included sample forms available at specific URL's on your site. A route
+# maps a URL path to a controller. For page controllers it defines the
+# function or method that will be called when the page is accessed.  For form
+# controllers the content is determined by the buildForm method defined by the
+# form controller implementation.
+
+# Access to these paths is restricted to users with the permission
+# 'access content'. This is notated as _permission: 'access content'.
+
+# Menu items corresponding to these URLs are defined separately in the
+# simpleForm.links.menu.yml file.
+drupal_db_search.table_column_form:
+  path: 'mjs1138/drupal_db_search/search-form'
+  defaults:
+    _form:  '\Drupal\drupal_db_search\Form\DrupalDbSearch'
+    _title: 'mjs1138 Drupal DB Table Search'
+  requirements:
+    _permission: 'access content'

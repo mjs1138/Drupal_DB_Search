@@ -1,0 +1,12 @@
+name: drupal db search
+type: module
+description: Search Drupal Database Table for Column Values
+package: mjs modules
+# core: 8.x
+dependencies:
+  - drupal:node
+
+# Information added by Drupal.org packaging script on 2017-01-15
+version: '8.x-1.x-dev'
+core: '8.x'
+project: 'mjs1138'
