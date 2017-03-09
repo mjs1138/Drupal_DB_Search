@@ -3,6 +3,7 @@
 namespace Drupal\drupal_db_search\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Database\Driver\mysql\Connection;
 
 /**
  * Simple page controller for drupal.
@@ -13,9 +14,15 @@ class DisplayDBTableColumnValues extends ControllerBase
     public function displayDbTableColumnValues()
     {
 
-//        $dbList = $this->_buildDatabaseListz();
-//        $connection = \Drupal::database();
-//        $result = $connection->query('SHOW DATABASES');
+        $targetTable = $_SESSION['DrupalDbSearch']['FormValues']['table'];
+        $targetColumn = $_SESSION['DrupalDbSearch']['FormValues']['column'];
+
+        $dbList = $this->_getListOfDbS();
+//        $targetDbS = $this->_getListOfTargetDbS($dbList, $targetTable);
+
+
+
+
 
         $query = \Drupal::database()->select('users_field_data', 'u');
         $query->fields('u', ['uid', 'name', 'mail']);
@@ -48,9 +55,32 @@ class DisplayDBTableColumnValues extends ControllerBase
         return $form;
     }
 
-    function _buildDatabaseListz()
+    function _getListOfDbS()
     {
-        $a = 1;
-        return $a;
+        $connection = \Drupal::database();
+        $databaseS = $connection->query('SHOW DATABASES')->fetchAll();
+        return $databaseS;
     }
+
+    function _getListOfTargetDbS($dbList, $targetTable)
+    {
+        $count = 0;
+        $dbTargetDbList = array();
+        $pdo = new PDO(sprintf('mysql:host=%s', DB_HOST), DB_USER, DB_PASS); //PDO without selecting DB
+        foreach ($dbList as $db) {
+            $pdo->query('USE ' . $db); // Select DB
+            if ($result = $pdo->query('SHOW TABLES FROM ' . $db)) {
+                $tableS = $result->fetchAll();
+                foreach ($tableS as $table) {
+                    if ($table[0] == $targetTable) {
+                        $dbTargetDbList[] = $db;
+                    }
+                    $count++;
+                }
+            }
+        }
+        return $dbTargetDbList;
+    }
+
+
 }
