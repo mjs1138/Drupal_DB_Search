@@ -96,11 +96,6 @@ class DrupalDbSearch extends FormBase
     public function validateForm(array &$form, FormStateInterface $form_state)
     {
         $a=1;
-//        $title = $form_state->getValue('title');
-//        if (strlen($title) < 0) {
-//            // Set an error for the form element with a key of "title".
-//            $form_state->setErrorByName('title', $this->t('The title must be at least 5 characters long.'));
-//        }
     }
 
     /**
@@ -115,8 +110,6 @@ class DrupalDbSearch extends FormBase
      */
     public function submitForm(array &$form, FormStateInterface $form_state)
     {
-        session_unset(); // Clear Session Array
-        $title = $form_state->getValue('title');
         $values = $form_state->getValues();
         $_SESSION['DrupalDbSearch']['FormValues'] = $values;
 

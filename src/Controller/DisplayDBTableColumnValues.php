@@ -12,7 +12,11 @@ class DisplayDBTableColumnValues extends ControllerBase
 
     public function displayDbTableColumnValues()
     {
-$a=1;
+
+//        $dbList = $this->_buildDatabaseListz();
+//        $connection = \Drupal::database();
+//        $result = $connection->query('SHOW DATABASES');
+
         $query = \Drupal::database()->select('users_field_data', 'u');
         $query->fields('u', ['uid', 'name', 'mail']);
         $results = $query->execute()->fetchAll();
@@ -44,4 +48,9 @@ $a=1;
         return $form;
     }
 
+    function _buildDatabaseListz()
+    {
+        $a = 1;
+        return $a;
+    }
 }
